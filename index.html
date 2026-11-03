@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BFAC Shift Scheduler Template</title>
+  </head>
+  <body>
+    <div class="controls">
+      <input type="text" id="empName" placeholder="Employee Name">
+
+      <select id="shiftRole">
+        <option value="Staff">Staff</option>
+        <option value="Intern">Intern</option>
+        <option value="Front-Desk Volunteer">Front-Desk Volunteer</option>
+        <option value="Work-Exchange Volunteer">Work-Exchange Volunteer</option>
+        <option value="Host">Host</option>
+      </select>
+      
+      <select id="shiftDay"></select>
+      <select id="startTime"></select>
+      <select id="endTime"></select>
+      <button onclick="addShift()">Add Shift</button>
+    </div>
+
+    <div class="schedule-container">
+      <!-- Header row -->
+      <div class="grid-header">Time</div>
+      <div class="grid-header">Monday</div>
+      <div class="grid-header">Tuesday</div>
+      <div class="grid-header">Wednesday</div>
+      <div class="grid-header">Thursday</div>
+      <div class="grid-header">Friday</div>
+      <div class="grid-header">Saturday</div>
+      <div class="grid-header">Sunday</div>
+
+      <!--Time Track Column -->
+      <div id="timeTrack"></div>
+
+      <!--7 Day Columns-->
+      <div class="day-column" id="day-0"></div>
+      <div class="day-column" id="day-1"></div>
+      <div class="day-column" id="day-2"></div>
+      <div class="day-column" id="day-3"></div>
+      <div class="day-column" id="day-4"></div>
+      <div class="day-column" id="day-5"></div>
+      <div class="day-column" id="day-6"></div>
+    </div>
+    
+    <script src="./script.js"></script>
+  </body>
+</html>
