@@ -10,7 +10,8 @@ const ROLE_COLORS = {
   "Host": '#2D2D8D', //Cobalt
 };
 
-let shifts = JSON.parse(localStorage.getItem('notion_shifts')) || [];
+const API_URL = 'https://api.npoint.io/aec1bf60d4c4599b0737';
+let shifts = [];
 
 function setupForm() {
     const daySelect = document.getElementById('shiftDay');
@@ -35,6 +36,19 @@ function setupForm() {
     }
 }
 
+async function loadShiftsFromCloud() {
+  try {
+    const response = await fetch(API_URL); 
+    if (!response.ok) throw new Error('Failed to fetch schedule');
+    const data = await response.json();
+
+    shifts = data.shifts || [];
+    renderSchedule();
+  } catch (error) {
+    console.error('Error loading schedule from cloud:', error);
+  }
+}
+
 function addShift() {
     const name = document.getElementById('empName').value.trim();
     const role = document.getElementById('shiftRole').value;
@@ -49,17 +63,12 @@ function addShift() {
 
     shifts.push({ id: Date.now(), name, role, day, start, end, color });
 
-    saveAndRender();
+    renderSchedule();
     document.getElementById('empName').value = '';
 }
 
 function deleteShift(id) {
     shifts = shifts.filter(s => s.id !== id);
-    saveAndRender();
-}
-
-function saveAndRender() {
-    localStorage.setItem('notion_shifts', JSON.stringify(shifts));
     renderSchedule();
 }
 
@@ -113,7 +122,7 @@ function formatHour(h) {
     return h > 12 ? `${h-12} PM` : h === 12 ? '12 PM' : `${h} AM`;
 }
 
-window.onload = () => {
+window.onload = async () => {
     setupForm();
-    renderSchedule();
+    await loadShiftsFromCloud();
 };
